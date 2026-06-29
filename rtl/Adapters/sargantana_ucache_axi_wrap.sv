@@ -1,5 +1,3 @@
-/
-// best  working abd achieved 2.605 CM/MHZ
 module sargantana_ucache_axi_wrap #(
     parameter int unsigned PHY_ADDR_SIZE  = drac_pkg::PHY_ADDR_SIZE,
     parameter int unsigned AXI_ADDR_WIDTH = 64,
