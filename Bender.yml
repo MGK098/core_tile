@@ -272,6 +272,9 @@ sources:
       - simulator/bsc-dm/rtl/riscv_dtm.sv
       - simulator/bsc-dm/SimJTAG/SimJTAG.sv
       - simulator/models/hdl/bootrom_behav.sv
+
+  - target: all(simulation, CHESHIRE_USE_SARGANTANA)
+    files:
       - simulator/models/hdl/konata_behav.sv
       - simulator/models/hdl/l2_behav.sv
       - simulator/models/hdl/rename_checking_behav.sv

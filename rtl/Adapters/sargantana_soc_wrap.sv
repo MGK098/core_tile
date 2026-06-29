@@ -273,9 +273,6 @@ module sargantana_soc_wrap
     .mst_resp_i  ( mux_resp )
   );
 
-  // ==========================================================================
-  // 5. Bypass Serializer (MUX directly drives flat AXI outputs)
-  // ==========================================================================
   assign axi_mst_ar_valid_o  = mux_req.ar_valid;
   assign axi_mst_ar_addr_o   = mux_req.ar.addr;
   assign axi_mst_ar_id_o     = mux_req.ar.id;

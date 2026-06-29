@@ -1,18 +1,4 @@
-/*
- * sargantana_ucache_axi_wrap.sv
- *
- * Adapter for uncacheable fetch requests (bootrom / debug buffer).
- *
- * top_tile sends:  brom_req_valid + brom_req_address (40 bits)
- * We send:         AXI AR single beat (uncacheable, len=0)
- * Cheshire returns:AXI R single beat (64 bits)
- * We return:       io_mem_grant_valid + 512-bit data (padded)
- *                  nc_icache_buffer only uses [63:0]
- *
- * Once tested, instantiated inside top_tile alongside
- * sargantana_icache_axi_wrap. Both feed into same io_mem_grant
- * port via a MUX in the top wrapper.
- */
+/
 // best  working abd achieved 2.605 CM/MHZ
 module sargantana_ucache_axi_wrap #(
     parameter int unsigned PHY_ADDR_SIZE  = drac_pkg::PHY_ADDR_SIZE,
@@ -32,7 +18,6 @@ module sargantana_ucache_axi_wrap #(
 
     // ----------------------------------------------------------------
     // TO top_tile (feeds into io_mem_grant - shared with icache)
-    // nc_icache_buffer only uses [63:0] of the 512-bit data
     // ----------------------------------------------------------------
     output logic                     brom_resp_valid_o,
     output logic [511:0]             brom_resp_data_o,   // padded to 512 bits
@@ -143,12 +128,6 @@ module sargantana_ucache_axi_wrap #(
     // ----------------------------------------------------------------
     assign axi_r_ready_o = (state_q == WAIT_R);
 
-    // ----------------------------------------------------------------
-    // Response back to top_tile
-    //
-    // Valid pulses once when R beat arrives
-    // Data is padded to 512 bits - nc_icache_buffer uses [63:0] only
-    // ----------------------------------------------------------------
     assign brom_resp_valid_o = (state_q == WAIT_R) && axi_r_valid_i;
     assign brom_resp_data_o  = {{448{1'b0}}, axi_r_i.data};
 
